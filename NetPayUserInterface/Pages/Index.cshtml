@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<di class="container">
+    <table id="table1" class="table table-dark">
+        <tr><th>ID</th><th>Content</th><th>StoryDate</th><th>Author</th><th>Title</th></tr>
+    </table>
+</di>
+@section Scripts{
+    <script>
+                function GetData()
+                {
+                    console.log("Data calling");
+                    $.ajax({
+                       url: "https://localhost:7138/api/Story",
+                        method: "GET",
+                        success: function(res) {
+                            console.log(res);
+                            var tableString="";
+                            $.each(res, function(index, value) {
+                                tableString += "<tr><td>" + value.iD + "</td><td>" + value.content + "</td><td>" + value.storyStartDate + "</td><td>" + value.auther + "</td><td>" + value.title + "</td></tr>";
+                            });
+                            console.log(tableString);
+
+                            $("#table1").append(tableString);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+
+                }
+        $(document).ready(function() {
+            GetData();
+        })
+    </script>
+}
