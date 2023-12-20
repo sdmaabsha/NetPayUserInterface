@@ -77,7 +77,15 @@ services.AddAuthentication(o =>
 });
 
 services.AddAuthorization();
-services.AddCors();
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
