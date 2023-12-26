@@ -79,12 +79,10 @@ services.AddAuthentication(o =>
 services.AddAuthorization();
 services.AddCors(options =>
 {
-    options.AddPolicy("AllowAnyOrigin", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:3000/")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
 });
 
 var app = builder.Build();

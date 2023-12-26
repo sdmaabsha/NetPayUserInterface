@@ -279,15 +279,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -484,22 +487,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -539,13 +542,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -606,6 +609,37 @@ namespace MinimalNetPay.Api
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
                     }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
 
@@ -862,15 +896,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -1067,22 +1104,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -1122,13 +1159,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -1188,6 +1225,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -1442,15 +1509,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -1647,22 +1717,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -1702,13 +1772,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -1768,6 +1838,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -2026,15 +2126,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -2231,22 +2334,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -2286,13 +2389,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -2352,6 +2455,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
 
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
@@ -2610,15 +2743,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -2815,22 +2951,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -2870,13 +3006,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -2936,6 +3072,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -3194,15 +3360,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -3399,22 +3568,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -3454,13 +3623,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -3520,6 +3689,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -3780,15 +3979,19 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
+
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -3985,22 +4188,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -4040,13 +4243,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -4106,6 +4309,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -4362,15 +4595,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -4567,22 +4803,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -4622,13 +4858,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -4688,6 +4924,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -4945,15 +5211,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -5150,22 +5419,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -5205,13 +5474,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -5271,6 +5540,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
                     return Results.Ok(projectStatus);
@@ -5528,15 +5827,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -5733,22 +6035,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -5788,13 +6090,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -5854,6 +6156,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
 
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
@@ -6112,15 +6444,18 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(coverageValues10);
                     }
 
-                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_reliability_rating");
+                    var newreliabilityratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "reliability_rating");
                     if (newreliabilityratingValues != null)
                     {
                         var Value = default(string);
-                        var lastIndex = newreliabilityratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        int versionInt = default(int);
+                        var lastIndex = newreliabilityratingValues.value;
+                        if (decimal.TryParse(lastIndex, out decimal versionDecimal))
                         {
-                            Value = NumberToWords(floatValue.ToString());
+                            versionInt = (int)Math.Round(versionDecimal);
+                            // Now, versionInt will contain the rounded integer value
                         }
+                        Value = NumberToWords(versionInt.ToString());
                         Condition newreliabilityratingValues11 = new Condition
                         {
                             status = "ERROR",
@@ -6317,22 +6652,22 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(ncLocationValues10);
                     }
 
-                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_technical_debt");
+                    var sqaleindexValues = measuresComponent.component.measures.Find(condition => condition.metric == "sqale_index");
                     if (sqaleindexValues != null)
                     {
                         string result = string.Empty;
                         var daysValue = default(double);
                         string formattedValue = default(string);
-                        var sqaleValue = sqaleindexValues.periods.Last();
-                        if (sqaleValue.value.Length == 1 || sqaleValue.value.Length == 2)
+                        var sqaleValue = sqaleindexValues.value;
+                        if (sqaleValue.Length == 1 || sqaleValue.Length == 2)
                         {
-                            daysValue = Convert.ToDouble(sqaleValue.value);
+                            daysValue = Convert.ToDouble(sqaleValue);
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             result = $"{formattedValue}min";
                         }
                         else
                         {
-                            var NewLastIndex = Convert.ToDouble(sqaleValue.value) / 60;
+                            var NewLastIndex = Convert.ToDouble(sqaleValue) / 60;
                             daysValue = NewLastIndex / 8;
                             formattedValue = ConvertToFormattedString(Convert.ToDecimal(daysValue));
                             string[] parts = Convert.ToString(formattedValue).Split('.');
@@ -6372,13 +6707,13 @@ namespace MinimalNetPay.Api
                         projectStatus.projectStatus.conditions.Add(sqaleindexValues10);
                     }
 
-                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_security_review_rating");
+                    var securityreviewratingValues = measuresComponent.component.measures.Find(condition => condition.metric == "security_review_rating");
                     if (securityreviewratingValues != null)
                     {
 
                         var Value = default(string);
-                        var lastIndex = securityreviewratingValues.periods.Last();
-                        if (float.TryParse(lastIndex.value, out float floatValue))
+                        var lastIndex = securityreviewratingValues.value;
+                        if (float.TryParse(lastIndex, out float floatValue))
                         {
                             Value = NumberToWords(floatValue.ToString());
                         }
@@ -6438,6 +6773,36 @@ namespace MinimalNetPay.Api
 
                         };
                         projectStatus.projectStatus.conditions.Add(duplicatedblocksValues10);
+                    }
+                    var duplicatedlinesdensity = measuresComponent.component.measures.Find(condition => condition.metric == "duplicated_lines_density");
+                    if (duplicatedlinesdensity != null)
+                    {
+
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = duplicatedlinesdensity.value,
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
+                    }
+                    else
+                    {
+                        Condition duplicatedlinesdensity10 = new Condition
+                        {
+                            status = "ERROR",
+                            metricKey = "duplicated_lines_density_add",
+                            comparator = "GT",
+                            periodIndexValue = "-",
+                            errorThreshold = "-",
+                            actualValue = "-",
+
+                        };
+                        projectStatus.projectStatus.conditions.Add(duplicatedlinesdensity10);
                     }
 
                     projectStatus.projectStatus.conditions = projectStatus.projectStatus.conditions.OrderBy(c => Array.IndexOf(metricKeyOrder, c.metricKey)).ToList();
@@ -6500,11 +6865,23 @@ namespace MinimalNetPay.Api
             {
                 return Number = "D";
             }
+            else if (Convert.ToInt64(Number) == 4.0)
+            {
+                return Number = "D";
+            }
             else if (Convert.ToInt64(Number) == 5)
             {
                 return Number = "E";
             }
+            else if (Convert.ToInt64(Number) == 5.0)
+            {
+                return Number = "E";
+            }
             else if (Convert.ToInt64(Number) == 6)
+            {
+                return Number = "F";
+            }
+            else if (Convert.ToInt64(Number) == 6.0)
             {
                 return Number = "F";
             }
@@ -6536,7 +6913,7 @@ namespace MinimalNetPay.Api
                         "technicaldebt_add",
                         "code_smells_add",
                         "coverage_add",
-                        "duplicated_lines_density",
+                        "duplicated_lines_density_add",
                         "numberofLines_add",
                         "security_hotspots_ADD",
                         "security_review_rating_add",
@@ -6548,7 +6925,8 @@ namespace MinimalNetPay.Api
                         "sqale_rating",
                         "bugs",
                         "new_reliability_rating",
-                        "new_security_rating"
+                        "new_security_rating",
+                        "duplicated_lines_density"
                     };
 
             return metricKeyOrder;
