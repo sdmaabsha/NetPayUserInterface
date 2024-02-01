@@ -34,10 +34,24 @@ namespace MinimalNetPay.Api
             
         }
 
+       
+
         internal static async Task<IResult> GetAuthenticationRestService()
         {
             try
             {
+                //var connString = "Server=localhost;User ID=root;Password=root;Database=netpay_db";
+
+                //await using var connection = new MySqlConnection(connString);
+                //await connection.OpenAsync();
+
+                //using (var cmd = new MySqlCommand())
+                //{
+                //    cmd.Connection = connection;
+                //    cmd.CommandText = "INSERT INTO sonarcube_data (idsonarcube,sonarcube_api_prefix,sonarcube_data) VALUES (@p)";
+                //    cmd.Parameters.AddWithValue("p", "Hello world");
+                //    await cmd.ExecuteNonQueryAsync();
+                //}
 
                 string apiUrl2 = BuildApiUrl("Net-Pay-Advance-Inc_authentication-rest-service_AYTOgXUc2-bht3MdDOKg", "qa");
                 WebRequest request2 = WebRequest.Create(apiUrl2);
@@ -390,7 +404,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                             valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -398,7 +423,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -1007,7 +1032,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -1015,7 +1051,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -1620,7 +1656,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -1628,7 +1675,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -2237,7 +2284,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -2245,7 +2303,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -2854,7 +2912,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -2862,7 +2931,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -3471,7 +3540,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -3479,7 +3559,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -4091,7 +4171,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -4099,7 +4190,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -4706,7 +4797,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -4714,7 +4816,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -5322,7 +5424,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -5330,7 +5443,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -5938,7 +6051,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -5946,7 +6070,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);
@@ -6555,7 +6679,18 @@ namespace MinimalNetPay.Api
                     var vulnerabilitiesValues = measuresComponent.component.measures.Find(condition => condition.metric == "new_vulnerabilities");
                     if (vulnerabilitiesValues != null)
                     {
-                        var valueVulData = vulnerabilitiesValues.periods.Last();
+                        var valueVulData = vulnerabilitiesValues.periods;
+                        var valueVulData2 = default(Period2);
+                        var valueVulData1 = default(string);
+                        if (valueVulData != null)
+                        {
+                            valueVulData2 = vulnerabilitiesValues.periods.Last();
+                            valueVulData1 = valueVulData2.value;
+                        }
+                        else
+                        {
+                            valueVulData1 = vulnerabilitiesValues.period.value;
+                        }
                         Condition vulnerabilitiesValues10 = new Condition
                         {
                             status = "ERROR",
@@ -6563,7 +6698,7 @@ namespace MinimalNetPay.Api
                             comparator = "GT",
                             periodIndexValue = "-",
                             errorThreshold = "-",
-                            actualValue = valueVulData.value,
+                            actualValue = valueVulData1,
 
                         };
                         projectStatus.projectStatus.conditions.Add(vulnerabilitiesValues10);

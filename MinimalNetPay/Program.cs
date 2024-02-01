@@ -7,6 +7,7 @@ using System.Data;
 using System.Text;
 using NetPay.DataAccess;
 using MinimalNetPay.Api.Authorization;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +94,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//builder.Services.AddTransient(x => new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
 
 app.UseCors(x => x
        .AllowAnyOrigin()
